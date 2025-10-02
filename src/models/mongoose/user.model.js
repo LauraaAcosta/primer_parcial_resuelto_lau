@@ -18,12 +18,36 @@ const UserSchema = new Schema(
       enum: ["secretary", "administrator"],
       default: "secretary",
     },
+    profile:{
+      employee_number:{
+        type: String,
+        unique: true, 
+        required: true
+      },
+      first_name:{
+        type: String,
+        required: true,
+      },
+      last_name:{
+        type: String,
+        unique: true, 
+      },
+      phone:{
+        type: String,
+        required: false
+      },
+    },
     deletedAt: { type: Date, default: null },
-    // ! FALTA COMPLETAR ACA
   },
   { timestamps: true }
 );
 
-// ! FALTA COMPLETAR ACA
+// ! FALTA COMPLETAR ACÁ
+
+
+
+UserSchema.pre(/^find/, function(next){
+  this.where({deleteAt:null})
+});
 
 export const UserModel = model("User", UserSchema);
